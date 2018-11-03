@@ -101,7 +101,7 @@ while True:
     client.publish("hacktmsibiu", str(i))
     print("time is:" + str(i))
     for index in range(19):
-        client.publish("hacktmsibiu/"+GUIDs[index]+"/coordinates", str(Locations[index][0])+";"+str(Locations[index][1]))
+        client.publish("hacktmsibiu/"+GUIDs[index]+"/coord", str(Locations[index][0])+";"+str(Locations[index][1]))
         chance=randint(0,100)
-        client.publish("hacktmsibiu/"+GUIDs[index]+"/noise",Hours[index][i] if chance >10 else -1 )
+        client.publish("hacktmsibiu/"+GUIDs[index]+"/value",Hours[index][i] if chance >10 else -1 )
     i += 1
