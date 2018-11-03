@@ -52,8 +52,7 @@ $(document).ready(()=>{
             //}
             $('#time').html(result.hour);
             result.sensors.forEach(data => {                    
-                if (markers[data.guid] == undefined)
-                {
+                if (markers[data.guid] == undefined) {
                     markers[data.guid] = {
                         coord: data.corod,
                         value: data.value,
@@ -61,28 +60,20 @@ $(document).ready(()=>{
                     }
                     markers[data.guid].dom.addTo(map);
                     markers[data.guid].dom.bindPopup(data.value);
-                }
-                else
-                {
-                    if (data.value < 0)
-                    {
+                } else {
+                    if (data.value < 0) {
                         markers[data.guid].dom.setIcon(disabledMarker);
                         console.log("pew");
                     }
                         
                     markers[data.guid].value = data.value;
-                    if (data.value < 33)
-                    {
+                    if (data.value < 33) {
                         markers[data.guid].dom.setIcon(greenMarker);
                         markers[data.guid].dom._popup.setContent(data.value);
-                    }
-                    else if (data.value < 66)
-                    {
+                    } else if (data.value < 66) {
                         markers[data.guid].dom.setIcon(yellowMarker);
                         markers[data.guid].dom._popup.setContent(data.value);
-                    }
-                    else
-                    {
+                    } else{
                         markers[data.guid].dom.setIcon(redMarker);
                         markers[data.guid].dom._popup.setContent(data.value);
                     }
