@@ -62,8 +62,20 @@ let changeSensorValue = (guid, value) => {
             'value' : parseInt(value)
         });
         console.log("Added new sensor" + JSON.stringify(sensors[sensors.length - 1]));
+        db_object.sensors.insertOne({
+            'guid':sensors[sensors.length - 1].guid,
+            'coord':sensors[sensors.length - 1].coord,
+            'value':sensors[sensors.length - 1].value,
+            'timestamp': Date.now()
+        });
     } else {
         sensors[id].value = parseInt(value);
+        db_object.sensors.insertOne({
+            'guid':sensors[sensors.length - 1].guid,
+            'coord':sensors[sensors.length - 1].coord,
+            'value':sensors[sensors.length - 1].value,
+            'timestamp': Date.now()
+        });
     }
 }
 
