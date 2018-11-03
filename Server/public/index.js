@@ -41,7 +41,6 @@ $(document).ready(()=>{
             data: {type: "getValues"}
         }).done(function(result)
         {
-            console.log(result);
             //{
             //  hour: 4,
             //  sensors: [{
@@ -59,6 +58,7 @@ $(document).ready(()=>{
                         dom: L.marker(data.coord, {icon: redMarker})
                     }
                     markers[data.guid].dom.addTo(map);
+<<<<<<< HEAD
                     markers[data.guid].dom.bindPopup(data.value);
                 } else {
                     if (data.value < 0) {
@@ -76,17 +76,53 @@ $(document).ready(()=>{
                     } else{
                         markers[data.guid].dom.setIcon(redMarker);
                         markers[data.guid].dom._popup.setContent(data.value);
+=======
+                    markers[data.guid].dom.bindPopup(data.value.toString());
+                    markers[data.guid].dom.on('click',(pew)=>{
+                        console.log(pew);
+                    });
+                }
+                else
+                {
+                    if (data.value < 0)
+                    {
+                        markers[data.guid].dom.setIcon(disabledMarker);
+                        console.log("pew");
+                    }
+                    else
+                    {
+                        markers[data.guid].value = data.value;
+                        if (data.value < 33)
+                        {
+                            markers[data.guid].dom.setIcon(greenMarker);
+                            markers[data.guid].dom._popup.setContent(data.value.toString());
+                        }
+                        else if (data.value < 66)
+                        {
+                            markers[data.guid].dom.setIcon(yellowMarker);
+                            markers[data.guid].dom._popup.setContent(data.value.toString());
+                        }
+                        else
+                        {
+                            markers[data.guid].dom.setIcon(redMarker);
+                            markers[data.guid].dom._popup.setContent(data.value.toString());
+                        }
+>>>>>>> 5ebb5e24afd21d4d3b24e05701eec910bbade88a
                     }
                 }
             });
         });
     }, 1000);
    
-    //var testMarker = L.marker([45.787444, 24.143985], {icon: redMarker});
-    //testMarker.addTo(map);
-    //testMarker.bindPopup("pew");
+    var testMarker = L.marker([45.787444, 24.143985], {icon: redMarker});
+    testMarker.addTo(map);
+    testMarker.bindPopup("pew");
+    testMarker.on('click',(pew)=>{
+        console.log(pew);
+    });
 
     $('#test').on('click',()=>{
+        console.log(getMethods(testMarker));
         testMarker.setIcon(greenMarker);
         testMarker._popup.setContent('something else');
     });
