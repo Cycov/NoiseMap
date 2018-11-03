@@ -35,7 +35,13 @@ $(document).ready(()=>{
 	var disabledMarker = new DefaultMarker({iconUrl: 'images/marker-disabled.png'});
 
     window.setInterval(function(){
-        jQuery.post('/','getValues',(result)=>{
+        $.ajax({
+            method: "POST",
+            url: "/",
+            data: {type: "getValues"}
+        }).done(function(result)
+        {
+            console.log(result);
             //{
             //  hour: 4,
             //  sensors: [{
@@ -65,23 +71,26 @@ $(document).ready(()=>{
                     if (data.value < 33)
                     {
                         markers[data.guid].dom.setIcon(greenMarker);
+                        markers[data.guid].dom._popup.setContent(data.value);
                     }
                     else if (data.value < 66)
                     {
                         markers[data.guid].dom.setIcon(yellowMarker);
+                        markers[data.guid].dom._popup.setContent(data.value);
                     }
                     else
                     {
                         markers[data.guid].dom.setIcon(redMarker);
+                        markers[data.guid].dom._popup.setContent(data.value);
                     }
                 }
             });
-        },"json");
+        });
     }, 1000);
    
-    var testMarker = L.marker([45.787444, 24.143985], {icon: redMarker});
-    testMarker.addTo(map);
-    testMarker.bindPopup("pew");
+    //var testMarker = L.marker([45.787444, 24.143985], {icon: redMarker});
+    //testMarker.addTo(map);
+    //testMarker.bindPopup("pew");
 
     $('#test').on('click',()=>{
         testMarker.setIcon(greenMarker);

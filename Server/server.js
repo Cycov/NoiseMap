@@ -44,34 +44,36 @@ function findSensorId(guid)
 }
 function changeSensorLocation(guid, coord)
 {
-    var id = findSensorId(sensor.guid);
-    var coordData = coord
+    var id = findSensorId(guid);
+    var coordData = coord.split(';');
     if (id == -1)
     {
         sensors.push({
             'guid':guid,
-            'coord' : coord,
+            'coord' : [parseFloat(coordData[0]),parseFloat(coordData[1])],
             'value': -1
         });
+        console.log("Added new sensor" + JSON.stringify(sensors[sensors.length - 1]));
     }
     else
     {
-        sensors[i].coord = sensor.coord;
+        sensors[id].coord = [parseFloat(coordData[0]),parseFloat(coordData[1])];
     }
 }function changeSensorValue(guid, value)
 {
-    var id = findSensorId(sensor.guid);
+    var id = findSensorId(guid);
     if (id == -1)
     {
         sensors.push({
             'guid' : guid,
             'coord' : [45.804930, 24.156635], //Random coords
-            'value' : value
+            'value' : parseInt(value)
         });
+        console.log("Added new sensor" + JSON.stringify(sensors[sensors.length - 1]));
     }
     else
     {
-        sensors[i].coord = sensor.coord;
+        sensors[id].value = parseInt(value);
     }
 }
 
@@ -105,12 +107,16 @@ MongoClient.connect(mongoConnection.url,{ useNewUrlParser: true }, function(err,
         }
         else
         {
+            //console.log(topic + " " + message.toString());
+
             //Expected guid in position 2
-            var data = topic.split(';');
+            var data = topic.split('/');
             if (data[2] == "coord")
                 changeSensorLocation(data[1],message.toString());
             else if (data[2] == "value")
                 changeSensorValue(data[1],message.toString())
+            else
+                console.log("Unknown data type found: " + data[2]);
         }
     });
 
@@ -120,9 +126,13 @@ MongoClient.connect(mongoConnection.url,{ useNewUrlParser: true }, function(err,
     });
 
     app.post('/',function(req,res){
-        if (req.body == 'getValues')
+        if (req.body.type == 'getValues')
         {
             res.send({'hour': currentHour, 'sensors': sensors});
+        }
+        else
+        {
+            res.send("Request unknown");
         }
     });
 
