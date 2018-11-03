@@ -1,0 +1,22 @@
+{
+  "name": "mongosensors",
+  "version": "1.0.0",
+  "description": "The web app for use with mongodb to store sensor information recieved as a request in a specific format",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongodb": "^3.1.1",
+    "npm": "^6.2.0",
+    "semantic-ui": "^2.3.3",
+    "semantic-ui-calendar": "0.0.8",
+    "upper-case": "^1.1.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Circa Dragos",
+  "license": "ISC"
+}

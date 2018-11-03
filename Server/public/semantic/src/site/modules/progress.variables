@@ -1,0 +1,10 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+@barTransitionEasing: 1ms;
+@barTransitionDuration: 1ms;
+@barTransition:
+  width @barTransitionDuration @barTransitionEasing,
+  background-color @barTransitionDuration @barTransitionEasing
+;
