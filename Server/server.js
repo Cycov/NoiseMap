@@ -27,6 +27,10 @@ host: '127.0.0.1'
 var dbo; //database object
 var mqttClient;
 
+//Varaibles to be constantly sent and updated
+var sensors = [];
+var currentHour = 0;
+
 MongoClient.connect(mongoConnection.url,{ useNewUrlParser: true }, function(err, db){
     if (err) throw err;
     else console.log('\x1b[32m%s\x1b[0m','Connected to database ' + mongoConnection.dbname + ' at adress ' + mongoConnection.url) 
@@ -47,12 +51,14 @@ MongoClient.connect(mongoConnection.url,{ useNewUrlParser: true }, function(err,
     mqttClient.on('connect', () => {
         console.log('\x1b[32m%s\x1b[0m','Connected to MQTT server at adress ' + mqttConnection.adress);
         mqttClient.subscribe('hacktmsibiu');
+        mqttClient.subscribe('')
     });
 
     mqttClient.on('message', (topic, message) => {
         if (topic === 'hacktmsibiu') {
-            console.log(message.toString());
+            currentHour = parseInt(message.toString());
         }
+        else if (topic === '')
     });
 
     //Server messages
