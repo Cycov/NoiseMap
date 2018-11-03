@@ -59,7 +59,8 @@ function changeSensorLocation(guid, coord)
     {
         sensors[id].coord = [parseFloat(coordData[0]),parseFloat(coordData[1])];
     }
-}function changeSensorValue(guid, value)
+}
+function changeSensorValue(guid, value)
 {
     var id = findSensorId(guid);
     if (id == -1)
