@@ -31,6 +31,50 @@ var mqttClient;
 var sensors = [];
 var currentHour = 0;
 
+function findSensorId(guid)
+{
+    for (let i = 0; i < sensors.length; i++) {
+        const element = sensors[i];
+        if (element.guid == guid)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+function changeSensorLocation(guid, coord)
+{
+    var id = findSensorId(sensor.guid);
+    var coordData = coord
+    if (id == -1)
+    {
+        sensors.push({
+            'guid':guid,
+            'coord' : coord,
+            'value': -1
+        });
+    }
+    else
+    {
+        sensors[i].coord = sensor.coord;
+    }
+}function changeSensorValue(guid, value)
+{
+    var id = findSensorId(sensor.guid);
+    if (id == -1)
+    {
+        sensors.push({
+            'guid' : guid,
+            'coord' : [45.804930, 24.156635], //Random coords
+            'value' : value
+        });
+    }
+    else
+    {
+        sensors[i].coord = sensor.coord;
+    }
+}
+
 MongoClient.connect(mongoConnection.url,{ useNewUrlParser: true }, function(err, db){
     if (err) throw err;
     else console.log('\x1b[32m%s\x1b[0m','Connected to database ' + mongoConnection.dbname + ' at adress ' + mongoConnection.url) 
@@ -51,14 +95,23 @@ MongoClient.connect(mongoConnection.url,{ useNewUrlParser: true }, function(err,
     mqttClient.on('connect', () => {
         console.log('\x1b[32m%s\x1b[0m','Connected to MQTT server at adress ' + mqttConnection.adress);
         mqttClient.subscribe('hacktmsibiu');
-        mqttClient.subscribe('')
+        mqttClient.subscribe('hacktmsibiu/#')
     });
 
     mqttClient.on('message', (topic, message) => {
-        if (topic === 'hacktmsibiu') {
+        if (topic === 'hacktmsibiu') 
+        {
             currentHour = parseInt(message.toString());
         }
-        else if (topic === '')
+        else
+        {
+            //Expected guid in position 2
+            var data = topic.split(';');
+            if (data[2] == "coord")
+                changeSensorLocation(data[1],message.toString());
+            else if (data[2] == "value")
+                changeSensorValue(data[1],message.toString())
+        }
     });
 
     //Server messages
@@ -67,7 +120,10 @@ MongoClient.connect(mongoConnection.url,{ useNewUrlParser: true }, function(err,
     });
 
     app.post('/',function(req,res){
-        //req.body.pew
+        if (req.body == 'getValues')
+        {
+            res.send({'hour': currentHour, 'sensors': sensors});
+        }
     });
 
     app.listen(local.port,local.host,function(){

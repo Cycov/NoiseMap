@@ -35,12 +35,15 @@ $(document).ready(()=>{
 	var disabledMarker = new DefaultMarker({iconUrl: 'images/marker-disabled.png'});
 
     window.setInterval(function(){
-        jQuery.post('/',"getValues",(result)=>{
-            //[{
-            //  guid: "",
-            //  coord: [45.787444, 24.143985],
-            //  value: 62
-            //}]
+        jQuery.post('/','getValues',(result)=>{
+            //{
+            //  hour: 4,
+            //  sensors: [{
+            //      guid: "",
+            //      coord: [45.787444, 24.143985],
+            //      value: 62
+            //  }]
+            //}
             $('#time').html(result.hour);
             result.sensors.forEach(data => {                    
                 if (markers[data.guid] == undefined)
