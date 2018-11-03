@@ -33,8 +33,7 @@ let currentHour = 0;
 let findSensorId = (guid) => {
     for (let i = 0; i < sensors.length; i++) {
         const element = sensors[i];
-        if (element.guid == guid)
-        {
+        if (element.guid == guid) {
             return i;
         }
     }
@@ -43,33 +42,27 @@ let findSensorId = (guid) => {
 let changeSensorLocation = (guid, coord) => {
     let id = findSensorId(guid);
     let coordData = coord.split(';');
-    if (id == -1)
-    {
+    if (id == -1) {
         sensors.push({
             'guid':guid,
             'coord' : [parseFloat(coordData[0]),parseFloat(coordData[1])],
             'value': -1
         });
         console.log("Added new sensor" + JSON.stringify(sensors[sensors.length - 1]));
-    }
-    else
-    {
+    } else {
         sensors[id].coord = [parseFloat(coordData[0]),parseFloat(coordData[1])];
     }
 }
 let changeSensorValue = (guid, value) => {
     let id = findSensorId(guid);
-    if (id == -1)
-    {
+    if (id == -1) {
         sensors.push({
             'guid' : guid,
             'coord' : [45.804930, 24.156635], // Random coords
             'value' : parseInt(value)
         });
         console.log("Added new sensor" + JSON.stringify(sensors[sensors.length - 1]));
-    }
-    else
-    {
+    } else {
         sensors[id].value = parseInt(value);
     }
 }
