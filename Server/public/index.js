@@ -21,9 +21,9 @@ $(document).ready(()=>{
 			//shadowUrl: 'logo.png',
 			iconSize:     [64, 64],
 			shadowSize:   [50, 64],
-			iconAnchor:   [32, 64],
+			iconAnchor:   [28.5, 51.5],
 			shadowAnchor: [4, 62],
-			popupAnchor:  [-3, -76]
+			popupAnchor:  [0, -45]
 		}
 	});
 
@@ -35,41 +35,47 @@ $(document).ready(()=>{
 	var disabledMarker = new DefaultMarker({iconUrl: 'images/marker-disabled.png'});
 
     window.setInterval(function(){
-        jQuery.post('/',"getValues",(data)=>{
+        jQuery.post('/','getValues',(result)=>{
             //{
-            //  guid: "",
-            //  coord: [45.787444, 24.143985],
-            //  value: 62
+            //  hour: 4,
+            //  sensors: [{
+            //      guid: "",
+            //      coord: [45.787444, 24.143985],
+            //      value: 62
+            //  }]
             //}
-            if (markers[data.guid] == undefined)
-            {
-                markers[data.guid] = {
-                    coord: data.corod,
-                    value: data.value,
-                    dom: L.marker([45.787444, 24.143985], {icon: redMarker})
-                }
-                markers[data.guid].dom.addTo(map);
-                markers[data.guid].dom.bindPopup(data.value);
-            }
-            else
-            {
-                if (data.value < 0)
-                    markers[data.guid].dom.setIcon(disabledMarker);
-                    
-                markers[data.guid].value = data.value;
-                if (data.value < 33)
+            $('#time').html(result.hour);
+            result.sensors.forEach(data => {                    
+                if (markers[data.guid] == undefined)
                 {
-                    markers[data.guid].dom.setIcon(greenMarker);
-                }
-                else if (data.value < 66)
-                {
-                    markers[data.guid].dom.setIcon(yellowMarker);
+                    markers[data.guid] = {
+                        coord: data.corod,
+                        value: data.value,
+                        dom: L.marker(data.coord, {icon: redMarker})
+                    }
+                    markers[data.guid].dom.addTo(map);
+                    markers[data.guid].dom.bindPopup(data.value);
                 }
                 else
                 {
-                    markers[data.guid].dom.setIcon(redMarker);
+                    if (data.value < 0)
+                        markers[data.guid].dom.setIcon(disabledMarker);
+                        
+                    markers[data.guid].value = data.value;
+                    if (data.value < 33)
+                    {
+                        markers[data.guid].dom.setIcon(greenMarker);
+                    }
+                    else if (data.value < 66)
+                    {
+                        markers[data.guid].dom.setIcon(yellowMarker);
+                    }
+                    else
+                    {
+                        markers[data.guid].dom.setIcon(redMarker);
+                    }
                 }
-            }
+            });
         },"json");
     }, 1000);
    
@@ -78,7 +84,7 @@ $(document).ready(()=>{
     testMarker.bindPopup("pew");
 
     $('#test').on('click',()=>{
-        console.log(getMethods(markers[0]));
-        markers[0].setIcon(greenMarker);
+        testMarker.setIcon(greenMarker);
+        testMarker._popup.setContent('something else');
     });
 });
