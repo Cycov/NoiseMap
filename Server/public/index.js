@@ -65,7 +65,10 @@ $(document).ready(()=>{
                 else
                 {
                     if (data.value < 0)
+                    {
                         markers[data.guid].dom.setIcon(disabledMarker);
+                        console.log("pew");
+                    }
                         
                     markers[data.guid].value = data.value;
                     if (data.value < 33)
