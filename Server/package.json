@@ -8,8 +8,8 @@
     "express": "^4.16.3",
     "mongodb": "^3.1.1",
     "mqtt": "^2.18.8",
-    "npm": "^6.2.0",
-    "semantic-ui": "^2.3.3",
+    "npm": "^6.4.1",
+    "semantic-ui": "^2.4.2",
     "semantic-ui-calendar": "0.0.8",
     "upper-case": "^1.1.3"
   },
