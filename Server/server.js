@@ -32,8 +32,7 @@ let currentHour = 0;
 
 let findSensorId = (guid) => {
     for (let i = 0; i < sensors.length; i++) {
-        const element = sensors[i];
-        if (element.guid == guid) {
+        if (sensors[i].guid == guid) {
             return i;
         }
     }
@@ -45,7 +44,7 @@ let changeSensorLocation = (guid, coord) => {
     if (id == -1) {
         sensors.push({
             'guid':guid,
-            'coord' : [parseFloat(coordData[0]),parseFloat(coordData[1])],
+            'coord' : [parseFloat(coordData[0]), parseFloat(coordData[1])],
             'value': -1
         });
         console.log("Added new sensor" + JSON.stringify(sensors[sensors.length - 1]));

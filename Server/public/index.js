@@ -51,8 +51,7 @@ $(document).ready(()=>{
             //}
             $('#time').html(result.hour);
             result.sensors.forEach(data => {                    
-                if (markers[data.guid] == undefined)
-                {
+                if (markers[data.guid] == undefined) {
                     markers[data.guid] = {
                         coord: data.corod,
                         value: data.value,
