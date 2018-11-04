@@ -11,7 +11,6 @@ function getMethods(obj)
 
 $(() => {
     var map = L.map('map').setView([45.787444, 24.143985], 13);
-
 	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 	}).addTo(map);
@@ -73,7 +72,7 @@ $(() => {
                     else
                     {
                         markers[data.guid].value = data.value;
-                        if (data.value < 33)
+                        if (data.value < 40)
                         {
                             markers[data.guid].dom.setIcon(greenMarker);
                             markers[data.guid].dom._popup.setContent(data.value.toString());
@@ -98,14 +97,14 @@ $(() => {
     testMarker.addTo(map);
     testMarker.bindPopup("pew");
     testMarker.on('click',(pew)=>{
-        console.log(pew);
+        console.log(pew.originalEvent.explicitOriginalTarget.getAttribute('guid'));
+        $('.ui.modal').modal('show');
     });
 
     $('#test').on('click',()=>{
-        console.log(getMethods(testMarker));
+        console.log(getMethods(testMarker.getElement()));
+        testMarker.getElement().setAttribute("guid","hhhhhh-hhhhhhh-fffff-ffdddd");
         testMarker.setIcon(greenMarker);
-        // TODO: Aci se baga ID-ul in marker, coae
-        testMarker._icon.id = 'coae';
         testMarker._popup.setContent('something else');
     });
 });
