@@ -239,5 +239,5 @@ $(() => {
 
         testMarker._popup.setContent('<div id="chart_div"></div>');
 
-    });
+    }); */
 });
