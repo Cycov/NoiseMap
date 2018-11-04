@@ -93,7 +93,7 @@ $(() => {
         });
     }, 1000);
    
-    var testMarker = L.marker([45.787444, 24.143985], {icon: redMarker});
+    /*var testMarker = L.marker([45.787444, 24.143985], {icon: redMarker});
     testMarker.addTo(map);
     testMarker.bindPopup("pew");
     testMarker.on('click',(pew)=>{
@@ -105,5 +105,5 @@ $(() => {
         testMarker.getElement().setAttribute("guid","hhhhhh-hhhhhhh-fffff-ffdddd");
         testMarker.setIcon(greenMarker);
         testMarker._popup.setContent('something else');
-    });
+    });*/
 });
