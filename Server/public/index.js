@@ -54,7 +54,7 @@ $(() => {
                     markers[data.guid] = {
                         coord: data.corod,
                         value: data.value,
-                        dom: L.marker(data.coord, {icon: redMarker})
+                        dom: L.marker(data.coord, {icon: disabledMarker})
                     }
                     markers[data.guid].dom.addTo(map);
                     markers[data.guid].dom.bindPopup(data.value.toString());
