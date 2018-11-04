@@ -98,7 +98,6 @@ $(() => {
     testMarker.bindPopup("pew");
     testMarker.on('click',(pew)=>{
         console.log(pew.originalEvent.explicitOriginalTarget.getAttribute('guid'));
-        $('.ui.modal').modal('show');
     });
 
     $('#test').on('click',()=>{
