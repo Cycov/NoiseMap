@@ -189,7 +189,7 @@ $(() => {
                     markers[data.guid] = {
                         coord: data.corod,
                         value: data.value,
-                        dom: L.marker(data.coord, {icon: redMarker})
+                        dom: L.marker(data.coord, {icon: disabledMarker})
                     }
                     markers[data.guid].dom.addTo(map);
                     markers[data.guid].dom.bindPopup(`<div id="chart_div" guid="${data.guid}"></div>`);
@@ -218,7 +218,7 @@ $(() => {
         });
     }, 1000);
    
-    var testMarker = L.marker([45.787444, 24.143985], {icon: redMarker});
+    /*var testMarker = L.marker([45.787444, 24.143985], {icon: redMarker});
     testMarker.addTo(map);
     testMarker.bindPopup("pew", {
     	maxWidth: 500,
