@@ -211,7 +211,7 @@ def option2():
             coord.append(longitude)
             Locations.append(coord)
             Killed.append(False)
-    except e:
+    except Exception:
         pass
     ind += no
 
@@ -219,16 +219,19 @@ def option2():
 
 def Thread():
     while True:
-        option = input("1)KILL NODE \n2) ADD NODE\n3)Kill ALL")
-        option =int (option)
-        if option == 1:
-            option1()
-        elif option==2:
-            option2()
-        elif option==3:
-            print("Killed all nodes")
-            for i in range(len(Killed)-1):
-                Killed[i]=True
+        try:
+            option = input("1)KILL NODE \n2) ADD NODE\n3)Kill ALL")
+            option =int (option)
+            if option == 1:
+                option1()
+            elif option==2:
+                option2()
+            elif option==3:
+                print("Killed all nodes")
+                for i in range(len(Killed)-1):
+                    Killed[i]=True
+        except Exception:
+            pass
 
 
 print("Starting loop")
