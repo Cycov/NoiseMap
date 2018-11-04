@@ -48,8 +48,20 @@ let changeSensorLocation = (guid, coord) => {
             'value': -1
         });
         console.log("Added new sensor" + JSON.stringify(sensors[sensors.length - 1]));
+        db_object.collection("sensors").insertOne({
+            'guid':sensors[sensors.length - 1].guid,
+            'coord':sensors[sensors.length - 1].coord,
+            'value':sensors[sensors.length - 1].value,
+            'timestamp': Date.now()
+        });
     } else {
-        sensors[id].coord = [parseFloat(coordData[0]), parseFloat(coordData[1])];
+        sensors[id].coord = [parseFloat(coordData[0]),parseFloat(coordData[1])];
+        db_object.collection("sensors").insertOne({
+            'guid':sensors[id].guid,
+            'coord':sensors[id].coord,
+            'value':sensors[id].value,
+            'timestamp': Date.now()
+        });
     }
 }
 let changeSensorValue = (guid, value) => {
@@ -61,7 +73,7 @@ let changeSensorValue = (guid, value) => {
             'value' : parseInt(value)
         });
         console.log("Added new sensor" + JSON.stringify(sensors[sensors.length - 1]));
-        db_object.sensors.insertOne({
+        db_object.collection("sensors").insertOne({
             'guid':sensors[sensors.length - 1].guid,
             'coord':sensors[sensors.length - 1].coord,
             'value':sensors[sensors.length - 1].value,
@@ -69,10 +81,10 @@ let changeSensorValue = (guid, value) => {
         });
     } else {
         sensors[id].value = parseInt(value);
-        db_object.sensors.insertOne({
-            'guid':sensors[sensors.length - 1].guid,
-            'coord':sensors[sensors.length - 1].coord,
-            'value':sensors[sensors.length - 1].value,
+        db_object.collection("sensors").insertOne({
+            'guid':sensors[id].guid,
+            'coord':sensors[id].coord,
+            'value':sensors[id].value,
             'timestamp': Date.now()
         });
     }
